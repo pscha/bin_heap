@@ -1,4 +1,3 @@
-#include "PriorityQueue.h"
 #include <stdlib.h>
 
 /*
@@ -6,30 +5,40 @@
 */
 
 struct priorityQueueEntry {
-	struct priorityQueueEntry parent;
-	struct priorityQueueEntry childl;
-	struct priorityQueueEntry childr;
+	struct priorityQueueEntry* childl;
+	struct priorityQueueEntry* childr;
 	int key;
 	void *data;
-}
+};
+typedef struct priorityQueueEntry priorityQueueEntry;
+
+
+typedef struct priorityQueue{
+	struct priorityQueueEntry* root;
+	int size;
+};
+
+typedef struct priorityQueue priorityQueue;
 
 /****
 	Interface functions
 ****/
-priorityQueue * newPrioroityQueue(){
+priorityQueue* newPrioroityQueue(){
 	
 /* 
 	generate a pointer to the position the first node is 
 	going to be
 */	
 
-	struct priorityQueueEntry *queueStartPointer;
-
-	return *queueStartPointer; 
+	priorityQueue *queue;
+	(*queue).root = NULL;
+	(*queue).size = 0;
+	
+	return queue; 
 	
 }
 
-priorityQueueEntry priorityQueueInsert(\	
+priorityQueueEntry priorityQueueInsert(\
 	priorityQueue* queue, \
 	int key,\
 	void* data){
@@ -42,29 +51,73 @@ priorityQueueEntry priorityQueueInsert(\
 	/* allocate memory */
 	priorityQueueEntry entry = \
 		(struct priorityQueueEntry *)\
-		malloc(sizeof (struct priorityQueueEntry));
+		malloc(sizeof (priorityQueueEntry));
 
 	/* move information into the entrys */
 	entry.key=key;
 	entry.data=data;
 	entry.childl=NULL;
 	entry.childr=NULL;
-	entry.parent=
+
 	/* get the entry into the corect position */
-	heapify();	
+
+	if(size==0)
+		newchild=*queue.root;
+	else {
+		int address=reverseInt(size);
+		priorityQueueEntry* newchild=trickle(*queue.root, *entry, address);
+	}
+	*newchild = entry;
+	
+	return entry;
 }
+
+
 
 
 /*****
 	non interface functions 
 *****/
-
-heapify(){
-
+int reverseInt(int i) {
+	int result=1;
+	do
+		result=result*2+i%2
+	while(i/=2>1);
+	return result;
 }
 
+priorityQueueEntry* trickle(\
+	priorityQueueEntry node,\
+	priorityQueueEntry entry,\
+	int address){
+	
+	if(*entry.key<*node.key)
+		swap(key,entry);
+	
+	priorityQueueEntry* next;
+	if(address%2==0)
+		next* =node.childl;
+	else
+		next* =node.childr;
+	address/=2;
+	
+	if(next)
+		return trickle(*next,*entry,address);
+	else {
+		if(address!=1)
+			printf("ADDRESS!=1");
+		return next;
+	}
+}
+
+
 swap(priorityQueueEntry entry1, priorityQueueEntry entry2){
-	keyTmp = entry1.
+	int keyTmp = entry1.key;
+	void* dataTmp = entry1.data;
+	entry1.key = entry2.key;
+	entry1.data = entry2.data;
+	entry2.key = keyTmp;
+	entry2.data = dataTmp;
 }
 
 
