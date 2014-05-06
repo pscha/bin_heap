@@ -1,10 +1,34 @@
-priorityQueue* newPriorityQueue()
+#ifndef PRIORITYQUEUE_H
+#define PRIORITYQUEUE_H
 
-priorityQueueEntry priorityQueueInsert(priorityQueue* queue, int key, void* data)
+struct priorityQueueEntry {
+        struct priorityQueueEntry* childl;
+        struct priorityQueueEntry* childr;
+        int key;
+        void *data;
+};
+typedef struct priorityQueueEntry priorityQueueEntry;
 
-void priorityQueueDecreaseKey(priorityQueue* queue, priorityQueueEntry* entry, int newKey)
 
-void* priorityQueueExtract(priorityQueue* queue)
+struct priorityQueue{
+        struct priorityQueueEntry* root;
+        int size;
+};
 
-void deletePriorityQueue(priorityQueue* queue)
+typedef struct priorityQueue priorityQueue;
 
+
+
+
+
+
+priorityQueue* newPriorityQueue();
+
+priorityQueueEntry priorityQueueInsert(priorityQueue* queue, int key, void* data);
+
+void priorityQueueDecreaseKey(priorityQueue* queue, priorityQueueEntry* entry, int newKey);
+
+void* priorityQueueExtract(priorityQueue* queue);
+
+void deletePriorityQueue(priorityQueue* queue);
+#endif
