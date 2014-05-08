@@ -95,7 +95,7 @@ void priorityQueueDecreaseKey(\
 	}
 }
 
-
+/*TODO: error smashing, as I don't want to destroy the code*/
 void* priorityQueueExtract(
 	priorityQueue* queue)
 {
