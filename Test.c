@@ -20,10 +20,10 @@ int main(){
 	priorityQueueDecreaseKey(root, &entry3,2);
 	
 	printf("%s %s %d %f", \
-		(char*) priorityQueueExtract(root)->data,\
-		(char*) priorityQueueExtract(root)->data,\
-		(int) priorityQueueExtract(root)->data,\
-		(double) priorityQueueExtract(root)->data\
+		(char*) priorityQueueExtract(root),\
+		(char*) priorityQueueExtract(root),\
+		*((int*) priorityQueueExtract(root)),\
+		*((double*) priorityQueueExtract(root))\
 	);
 	
 	entry3 = priorityQueueInsert(root, 1, string);
