@@ -1,7 +1,8 @@
 #ifndef PRIORITYQUEUE_H
 #define PRIORITYQUEUE_H
-
+#include "PriorityQueue.c"
 struct priorityQueueEntry {
+        struct priorityQueueEntry* parent;
         struct priorityQueueEntry* childl;
         struct priorityQueueEntry* childr;
         int key;
@@ -16,11 +17,6 @@ struct priorityQueue{
 };
 
 typedef struct priorityQueue priorityQueue;
-
-
-
-
-
 
 priorityQueue* newPriorityQueue();
 

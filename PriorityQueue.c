@@ -49,6 +49,7 @@ priorityQueueEntry priorityQueueInsert(\
 	/* move information into the entrys */
 	entry.key=key;
 	entry.data=data;
+	entry.parent=NULL;
 	entry.childl=NULL;
 	entry.childr=NULL;
 
@@ -65,7 +66,50 @@ priorityQueueEntry priorityQueueInsert(\
 	return entry;
 }
 
+void priorityQueueDecreaseKey(\
+	priorityQueue* queue, \
+	priorityQueueEntry* entry, \
+	int newKey
+){
+	/* TODO Error handling */
+	priorityQueueEntry current=*entry;
+	current.key=newKey;
+	while(current.parent && (*current.parent).key > current.key) {
+		swap(current,*current.parent);
+		current=*current.parent;
+	}
+}
 
+
+void* priorityQueueExtract(
+	priorityQueue* queue
+){
+	priorityQueueEntry* root=queue.root;
+	queue.root=priorityQueueEntryExtract(*queue.root);
+	return root;
+}
+/*
+*priorityQueueEntry priorityQueueEntryExtract(
+	priorityQueueEntry current
+){
+	priorityQueueEntry next, other;
+	if((*current.childl).key<(*current.childr).key) {
+		next=*current.childl;
+		other=*current.childr;
+	}
+	else {
+		next=*current.childr;
+		other=*current.childl;
+	}
+	next.childl=priorityQueueEntryExtract(next);
+	next.childr=other;
+}
+*/
+void deletePriorityQueue(\
+	priorityQueue* queue
+){
+
+}
 
 
 /*****
@@ -99,6 +143,7 @@ priorityQueueEntry* trickle(\
 	else {
 		if(address!=1)
 			printf("ADDRESS!=1");
+		*(entry.parent)=node;
 		return next;
 	}
 }
