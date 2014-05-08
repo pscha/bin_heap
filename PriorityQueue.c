@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 /*
+ *	A kind of library for priorityqueues
+ *	
+ *	This was written for courses in building compilers
+ *	at university by
+ *		Sascha Martensen <martensensascha@gmail.com>
+*/
+
+/*
 	define a node structure with parent and child nodes
 */
 int reverseInt(int);
