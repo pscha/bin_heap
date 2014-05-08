@@ -11,6 +11,8 @@ priorityQueueEntry* trickle(\
         int);
 
 void swap(priorityQueueEntry, priorityQueueEntry);
+
+void freeNode(proirityQueueEntry*);
 /****
 	Interface functions
 ****/
@@ -84,8 +86,8 @@ void priorityQueueDecreaseKey(\
 void* priorityQueueExtract(
 	priorityQueue* queue
 ){
-	priorityQueueEntry* root=queue.root;
-	queue.root=priorityQueueEntryExtract(*queue.root);
+	priorityQueueEntry* root=(*queue).root;
+	(*queue).root=priorityQueueEntryExtract(*queue.root);
 	
 	/* gibt den datapointer zurück, um an die infos zu kommen */
 	return root->data;
@@ -110,7 +112,8 @@ void* priorityQueueExtract(
 void deletePriorityQueue(\
 	priorityQueue* queue
 ){
-
+	freeNode(queue->root);
+	free(queue);
 }
 
 
@@ -160,4 +163,12 @@ void swap(priorityQueueEntry entry1, priorityQueueEntry entry2){
 	entry2.data = dataTmp;
 }
 
-
+void freeNode(priorityQueueEntry* entry){
+	if(entry->childl){
+		freeNode(entry->childl);
+	}
+	if(entry->childr){
+		freeNode(entry->childr);
+	}
+	free(entry);	
+}
