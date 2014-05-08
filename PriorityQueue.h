@@ -1,6 +1,6 @@
 #ifndef PRIORITYQUEUE_H
 #define PRIORITYQUEUE_H
-#include "PriorityQueue.c"
+
 struct priorityQueueEntry {
         struct priorityQueueEntry* parent;
         struct priorityQueueEntry* childl;
@@ -27,4 +27,6 @@ void priorityQueueDecreaseKey(priorityQueue* queue, priorityQueueEntry* entry, i
 void* priorityQueueExtract(priorityQueue* queue);
 
 void deletePriorityQueue(priorityQueue* queue);
+
+#include "PriorityQueue.c"
 #endif

@@ -86,7 +86,9 @@ void* priorityQueueExtract(
 ){
 	priorityQueueEntry* root=queue.root;
 	queue.root=priorityQueueEntryExtract(*queue.root);
-	return root;
+	
+	/* gibt den datapointer zurück, um an die infos zu kommen */
+	return root->data;
 }
 /*
 *priorityQueueEntry priorityQueueEntryExtract(
