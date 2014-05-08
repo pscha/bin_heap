@@ -12,11 +12,15 @@ priorityQueueEntry* trickle(\
 
 void swap(priorityQueueEntry, priorityQueueEntry);
 
-void freeNode(proirityQueueEntry*);
+priorityQueueEntry* priorityQueueEntryExtract(
+        priorityQueueEntry current
+);
+void freeNode(priorityQueueEntry*);
 /****
 	Interface functions
 ****/
-priorityQueue* newPrioroityQueue(){
+priorityQueue* newPrioroityQueue()
+{
 	
 /* 
 	generate a pointer to the position the first node is 
@@ -34,7 +38,8 @@ priorityQueue* newPrioroityQueue(){
 priorityQueueEntry priorityQueueInsert(\
 	priorityQueue* queue, \
 	int key,\
-	void* data){
+	void* data)
+{
 
 /*
 	generate an entry, pass all the data into it
@@ -71,8 +76,8 @@ priorityQueueEntry priorityQueueInsert(\
 void priorityQueueDecreaseKey(\
 	priorityQueue* queue, \
 	priorityQueueEntry* entry, \
-	int newKey
-){
+	int newKey)
+{
 	/* TODO Error handling */
 	priorityQueueEntry current=*entry;
 	current.key=newKey;
@@ -84,18 +89,18 @@ void priorityQueueDecreaseKey(\
 
 
 void* priorityQueueExtract(
-	priorityQueue* queue
-){
+	priorityQueue* queue)
+{
 	priorityQueueEntry* root=(*queue).root;
-	(*queue).root=priorityQueueEntryExtract(*queue.root);
+	(*queue).root=&(priorityQueueEntryExtract((*queue).root));
 	
 	/* gibt den datapointer zurück, um an die infos zu kommen */
 	return root->data;
 }
-/*
-*priorityQueueEntry priorityQueueEntryExtract(
-	priorityQueueEntry current
-){
+
+priorityQueueEntry* priorityQueueEntryExtract(
+	priorityQueueEntry current)
+{
 	priorityQueueEntry next, other;
 	if((*current.childl).key<(*current.childr).key) {
 		next=*current.childl;
@@ -108,11 +113,13 @@ void* priorityQueueExtract(
 	next.childl=priorityQueueEntryExtract(next);
 	next.childr=other;
 }
-*/
+/* delete the queue */
 void deletePriorityQueue(\
-	priorityQueue* queue
-){
+	priorityQueue* queue)
+{
+	/* first free all nodes */
 	freeNode(queue->root);
+	/* then free the queue */
 	free(queue);
 }
 
@@ -122,30 +129,40 @@ void deletePriorityQueue(\
 *****/
 int reverseInt(int i) {
 	int result=1;
-	do
+	
+	do{
 		result=result*2+i%2;
+	}
 	while(i/=2>1);
+	
 	return result;
 }
 
 priorityQueueEntry* trickle(\
 	priorityQueueEntry node,\
 	priorityQueueEntry entry,\
-	int address){
+	int address)
+{
 	
 	priorityQueueEntry *next;
-	if(entry.key<node.key)
-		swap(node,entry);
 	
-	if(address%2==0)
+	if(entry.key<node.key){
+		swap(node,entry);
+	}
+	
+	if(address%2==0){
 		next = node.childl;
-	else
+	}
+	else{
 		next = node.childr;
+	}
+
 	address/=2;
 	
-	if(next)
+	if(next){
 		return trickle(*next,entry,address);
-	else {
+	}
+	else{
 		if(address!=1)
 			printf("ADDRESS!=1");
 		*(entry.parent)=node;
@@ -154,7 +171,9 @@ priorityQueueEntry* trickle(\
 }
 
 
-void swap(priorityQueueEntry entry1, priorityQueueEntry entry2){
+void swap(priorityQueueEntry entry1, priorityQueueEntry entry2)
+{
+	/* swapping with a temporary variables */
 	int keyTmp = entry1.key;
 	void* dataTmp = entry1.data;
 	entry1.key = entry2.key;
@@ -163,12 +182,15 @@ void swap(priorityQueueEntry entry1, priorityQueueEntry entry2){
 	entry2.data = dataTmp;
 }
 
-void freeNode(priorityQueueEntry* entry){
+void freeNode(priorityQueueEntry* entry)
+{
+	/* if there are childs, free them */
 	if(entry->childl){
 		freeNode(entry->childl);
 	}
 	if(entry->childr){
 		freeNode(entry->childr);
 	}
+	/* then free the node */
 	free(entry);	
 }
