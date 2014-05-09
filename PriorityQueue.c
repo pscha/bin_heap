@@ -1,6 +1,7 @@
 #include "PriorityQueue.h"
 #include <stdlib.h>
 #include <stdio.h>
+
 /*
  *	A kind of library for priorityqueues
  *	
@@ -12,6 +13,7 @@
 /*
 	define a node structure with parent and child nodes
 */
+
 int reverseInt(int);
 priorityQueueEntry* trickle(\
         priorityQueueEntry,\
@@ -23,7 +25,9 @@ void swap(priorityQueueEntry, priorityQueueEntry);
 priorityQueueEntry* priorityQueueEntryExtract(
         priorityQueueEntry current
 );
+
 void freeNode(priorityQueueEntry*);
+
 /****
 	Interface functions
 ****/
@@ -100,12 +104,15 @@ void* priorityQueueExtract(
 	priorityQueue* queue)
 {
 	priorityQueueEntry* root=(*queue).root;
-	(*queue).root=&(priorityQueueEntryExtract((*queue).root));
+	/* TODO somthing here seams to be very odd */
+	(*queue).root=priorityQueueEntryExtract((*queue).root);
 	
 	/* gibt den datapointer zurück, um an die infos zu kommen */
 	return root->data;
 }
 
+
+/* TODO either a return or change it into a void function */
 priorityQueueEntry* priorityQueueEntryExtract(
 	priorityQueueEntry current)
 {
@@ -120,7 +127,9 @@ priorityQueueEntry* priorityQueueEntryExtract(
 	}
 	next.childl=priorityQueueEntryExtract(next);
 	next.childr=other;
+	
 }
+
 /* delete the queue */
 void deletePriorityQueue(\
 	priorityQueue* queue)
