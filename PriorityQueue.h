@@ -1,6 +1,5 @@
 #ifndef PRIORITYQUEUE_H
 #define PRIORITYQUEUE_H
-
 struct priorityQueueEntry {
         struct priorityQueueEntry* parent;
         struct priorityQueueEntry* childl;
@@ -10,13 +9,25 @@ struct priorityQueueEntry {
 };
 typedef struct priorityQueueEntry priorityQueueEntry;
 
-
 struct priorityQueue{
         struct priorityQueueEntry* root;
         int size;
 };
-
 typedef struct priorityQueue priorityQueue;
+
+
+
+int reverseInt(int);
+
+priorityQueueEntry* insert(priorityQueueEntry*, priorityQueueEntry*, int);
+
+void swap(priorityQueueEntry*, priorityQueueEntry*);
+
+priorityQueueEntry* priorityQueueEntryExtract(
+        priorityQueueEntry *current
+);
+
+void freeNode(priorityQueueEntry*);
 
 priorityQueue* newPriorityQueue();
 
@@ -27,6 +38,11 @@ void priorityQueueDecreaseKey(priorityQueue* queue, priorityQueueEntry* entry, i
 void* priorityQueueExtract(priorityQueue* queue);
 
 void deletePriorityQueue(priorityQueue* queue);
+
+void promote(priorityQueueEntry*);
+void demote(priorityQueueEntry*);
+
+priorityQueueEntry* nodeAt(priorityQueue*, int);
 
 #include "PriorityQueue.c"
 #endif
